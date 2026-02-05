@@ -3,6 +3,7 @@ package com.example.englab2
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
@@ -13,10 +14,18 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
@@ -27,11 +36,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.core.content.ContextCompat
 import com.example.englab2.ui.theme.EngLab2Theme
-
+import androidx.compose.ui.unit.dp
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +56,38 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-                    Column(modifier = Modifier.padding(innerPadding)) {
+                    Column(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
                         state.forEach { device  ->
-                            Row() {
+                            val isOn = device.value == "on" || device.value == "open"
+
+                            val iconRes = when (device.key) {
+                                "light" -> if (isOn) R.drawable.light_on else R.drawable.light_off
+                                "door" -> if (isOn) R.drawable.door_open else R.drawable.door_closed
+                                "window" -> if (isOn) R.drawable.window_open else R.drawable.window_closed
+                                else -> R.drawable.not_found
+                            }
+
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Image(
+                                    painter = painterResource(id = iconRes),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(60.dp)
+                                )
+
                                 Text(text = "${device.key}: ${device.value}")
-                                Switch(checked = (device.value == "on" || device.value == "open"), onCheckedChange = { viewmdoel.onUpdate(device.key, it) })
+                                Switch(
+                                    checked = isOn,
+                                    onCheckedChange = { viewmdoel.onUpdate(device.key, it) }
+                                )
                             }
                         }
                         STT(onRes = {viewmdoel.onSpeech(it)})
@@ -68,13 +106,13 @@ fun STT(onRes: (String) -> Unit){
     val ctx = LocalContext.current
     val speachRec = SpeechRecognizer.createOnDeviceSpeechRecognizer(ctx)
 
-    var button_text by remember { mutableStateOf("start speach rec") }
+    var button_text by remember { mutableStateOf("Start Speech Recognition") }
 
     speachRec.setRecognitionListener(myListenre(
-        onStart = { button_text = "start talking" },
-        onEnd = {button_text = "processing speach" },
+        onStart = { button_text = "Start Talking..." },
+        onEnd = {button_text = "Processing Speech..." },
         onRes = {
-            button_text = "start speach rec"
+            button_text = "Start Speech Recognition"
             onRes(it)
         }
     ))

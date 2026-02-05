@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.englab2"
-        minSdk = 24
+        minSdk = 31
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -61,4 +61,5 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
     implementation(libs.google.firebase)
     implementation(libs.firebase.ai)
+    implementation("androidx.compose.material:material-icons-extended")
 }
