@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "130807504706",
+    "firebase_url": "https://lab2-ab45a-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "lab2-ab45a",
+    "storage_bucket": "lab2-ab45a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130807504706:android:e999d3e87bcc403216b2db",
+        "android_client_info": {
+          "package_name": "com.example.englab2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2CpIgwdg5yNmEeOZaH6ipVhil9ewEldc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130807504706:android:adfa1506cb521c3b16b2db",
+        "android_client_info": {
+          "package_name": "com.example.lab2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2CpIgwdg5yNmEeOZaH6ipVhil9ewEldc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
